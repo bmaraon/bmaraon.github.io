@@ -13,12 +13,13 @@
 	.tip_avatar_con { background: url('../images/cartoon.png') no-repeat 20% center; }
 	.tip_right { width: 45%; height: 460px; position: absolute; right: 0; top: 50%; margin: -230px 0 0; }
 	.info_content.over .desc { height: 0; margin: 0; }
-	.info_content.over .s6.curr { height: 674px }
-	.info_content.over .s5.curr { padding-top: 100px; height: 574px }
-	.info_content.over .s4.curr { padding-top: 200px; height: 474px }
-	.info_content.over .s3.curr { padding-top: 300px; height: 374px }
-	.info_content.over .s2.curr { padding-top: 400px; height: 274px }
-	.info_content.over .s1.curr { padding-top: 500px; height: 174px }
+	.info_content.over .s7.curr { height: 674px }
+	.info_content.over .s6.curr { padding-top: 100px; height: 674px }
+	.info_content.over .s5.curr { padding-top: 190px; height: 574px }
+	.info_content.over .s4.curr { padding-top: 285px; height: 474px }
+	.info_content.over .s3.curr { padding-top: 385px; height: 374px }
+	.info_content.over .s2.curr { padding-top: 480px; height: 274px }
+	.info_content.over .s1.curr { padding-top: 580px; height: 174px }
 	.info_content ul li .btn_go { height: 30px; line-height: 30px; padding: 0 5px 0 10px; position: absolute; right: 10px; top: 5px; font-weight: normal; display: none; }
 	.info_content ul li:hover .btn_go { display: block; }
 
@@ -41,7 +42,7 @@
 	.info_left,.info_right { width: 100%; }
 	.base { width: 100%; }
 	.base p,.base h2 { text-align: center; }
-	.base span { position: relative; width: 110px; margin: 0 auto; display: block; right: inherit; }
+	.base span { position: relative; width: 180px; margin: 0 auto; display: block; right: inherit; }
 	.base span p { text-align: left; }
 	.info_timeline dl { margin-bottom: 10px; }
 	.info_timeline dl dt { width: 170px; }
