@@ -58,20 +58,75 @@ $(function() {
         });
     });
 
-    //timeline action
+    //timeline action — align highlighted Work Experience with the hovered row (desktop)
+    function workTimelineSyncEnabled() {
+        return window.matchMedia('(min-width: 800px)').matches;
+    }
+
+    function setWorkSyncVars(workBodyEl, y, minH) {
+        // jQuery 2.x does not reliably assign custom properties via .css(); use the style object.
+        workBodyEl.style.setProperty('--work-sync-y', y + 'px');
+        workBodyEl.style.setProperty('--work-sync-min-height', minH + 'px');
+    }
+
+    function syncWorkExperienceToTimeline($li) {
+        if (!workTimelineSyncEnabled()) return;
+        var s_id = $li.attr('id');
+        if (!s_id) return;
+        var $ul = $li.closest('ul');
+        var $workCell = $('#work-experience-panel');
+        var $workBody = $workCell.find('.work_exp_body');
+        if (!$workCell.length || !$workBody.length) return;
+
+        var workBodyEl = $workBody[0];
+        var liEl = $li[0];
+        var ulEl = $ul[0];
+
+        function apply() {
+            var bodyRect = workBodyEl.getBoundingClientRect();
+            var liRect = liEl.getBoundingClientRect();
+            var ulRect = ulEl.getBoundingClientRect();
+            var y = Math.max(0, Math.round(liRect.top - bodyRect.top));
+            var minH = Math.round(ulRect.bottom - bodyRect.top);
+            var $p = $workCell.find('.' + s_id);
+            var pH = Math.round($p.outerHeight(true)) || 120;
+            minH = Math.max(minH, y + pH);
+            setWorkSyncVars(workBodyEl, y, minH);
+        }
+
+        apply();
+        requestAnimationFrame(apply);
+    }
+
+    function clearWorkTimelineSync() {
+        $('.work_exp_body').each(function () {
+            this.style.removeProperty('--work-sync-y');
+            this.style.removeProperty('--work-sync-min-height');
+        });
+    }
+
     $('.info_timeline ul li').mouseenter(function(){
         $(this).addClass('curr');
         $(this).parent().addClass('focus');
         var s_id = $(this).attr('id');
-        $('.info_content').addClass('over')
+        $('.info_content').addClass('over');
         $('.'+s_id).addClass('curr');
+        syncWorkExperienceToTimeline($(this));
     });
     $('.info_timeline ul li').mouseleave(function(){
         $(this).removeClass('curr');
         $(this).parent().removeClass('focus');
-        $('.info_content').removeClass('over')
+        $('.info_content').removeClass('over');
         $('.info_content .desc').removeClass('curr');
-    }); 
+        clearWorkTimelineSync();
+    });
+
+    $(window).on('resize', function () {
+        var $li = $('.info_timeline ul > li.curr').first();
+        if ($li.length && $('#work-experience-panel').hasClass('over') && workTimelineSyncEnabled()) {
+            syncWorkExperienceToTimeline($li);
+        }
+    });
 
     //banner
     $('.carousel').carousel({

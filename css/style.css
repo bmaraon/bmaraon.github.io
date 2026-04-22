@@ -136,12 +136,12 @@ input:-moz-placeholder {
 
 ::-moz-selection {
     color: #fff;
-    background: #109d59;
+    background: #1E90FF;
 }
 
 ::selection {
     color: #fff;
-    background: #109d59;
+    background: #1E90FF;
 }
 
 .clearfix:after {
@@ -193,7 +193,6 @@ input:-moz-placeholder {
     -moz-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
-}
 
 .sd {
     box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2);
@@ -207,7 +206,7 @@ input:-moz-placeholder {
     }
 
     50% {
-        border: 1px #109d59 solid;
+        border: 1px #1E90FF solid;
     }
 
     100% {
@@ -354,7 +353,7 @@ i {
     border: 1px #ccc solid;
     overflow: hidden;
     font-size: 16px;
-    color: #109d59;
+    color: #1E90FF;
     animation: myloading 1s linear infinite;
     -moz-animation: myloading 1s linear infinite;
     -webkit-animation: myloading 1s linear infinite;
@@ -593,6 +592,83 @@ i {
     width: 100%;
 }
 
+.information_grid {
+    display: grid;
+    grid-template-columns: 47% 47%;
+    column-gap: 6%;
+    align-items: start;
+}
+
+.information_grid > .info_left,
+.information_grid > .info_right {
+    float: none;
+    width: 100%;
+    margin: 0;
+    min-width: 0;
+}
+
+/*
+ * Skills uses dt (float left) + dd (float right, width calc(100% - 200px)).
+ * Inside a grid track, default min-width:auto plus float/% width often mis-resolves
+ * and shoves dd content to the right. Flex + min-width:0 restores the old alignment.
+ */
+.information_grid .info_timeline dl.clearfix {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.information_grid .info_timeline dl.clearfix:after {
+    display: none;
+}
+
+.information_grid .info_timeline dl dt {
+    float: none;
+    flex: 0 0 200px;
+    width: 200px;
+    max-width: 200px;
+}
+
+.information_grid .info_timeline dl dd {
+    float: none;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
+
+/* Timeline hover: match Work Experience paragraph to the same row (measured in JS, min-width 800px) */
+@media (min-width: 800px) {
+    .info_content .work_exp_body {
+        position: relative;
+    }
+
+    .info_content.over .work_exp_body {
+        min-height: var(--work-sync-min-height, 0);
+    }
+
+    .info_content.over .work_exp_body .desc {
+        margin: 0;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .info_content.over .work_exp_body .desc.curr {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: var(--work-sync-y, 0);
+        height: auto;
+        overflow: visible;
+        opacity: 1;
+        pointer-events: auto;
+        margin-bottom: 0;
+    }
+}
+
 .info_content p {
     line-height: 22px;
     margin-bottom: 20px;
@@ -607,10 +683,6 @@ i {
     list-style: none;
     overflow: hidden;
     position: relative;
-}
-
-.info_content #projects-involved {
-    padding-top: 85px;
 }
 
 .info_content ul li h3 {
